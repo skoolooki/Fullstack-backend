@@ -8,24 +8,31 @@ if (process.argv.length<3) {
 const password = process.argv[2]
 
 const url =
-  `mongodb+srv://slava:${password}@cluster0.r3u2bai.mongodb.net/?retryWrites=true&w=majority`
+  `mongodb+srv://slava:${password}@cluster0.r3u2bai.mongodb.net/numerot?retryWrites=true&w=majority`
 
 mongoose.set('strictQuery', false)
 mongoose.connect(url)
 
-const noteSchema = new mongoose.Schema({
-  content: String,
-  important: Boolean,
+const puhelinSchema = new mongoose.Schema({
+    name: String,
+    number: String
 })
 
-const Note = mongoose.model('Note', noteSchema)
+const Puhelinnumero = new mongoose.model("Puhelinnumerot", puhelinSchema)
 
-const note = new Note({
-  content: 'HTML is Easy',
-  important: true,
+const numero = new Puhelinnumero({
+    name: "Joku",
+    number: "6132874621"
 })
 
-note.save().then(result => {
-  console.log('note saved!')
-  mongoose.connection.close()
+// Puhelinnumero.find({}).then(result => {
+//     result.forEach(thisnumero=> {
+//        console.log(thisnumero) 
+//     })
+//     mongoose.connection.close()
+// })
+
+numero.save().then(result => {
+    console.log("numero saved")
+    mongoose.connection.close()
 })
